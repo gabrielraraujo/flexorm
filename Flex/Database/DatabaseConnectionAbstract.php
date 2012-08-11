@@ -52,6 +52,13 @@
 		private $database = "";
 		
 		/**
+		 * Database Link
+		 * Objeto PDO para acesso ao banco de dados
+		 * @var \PDO
+		 */
+		private $_databaseLink = null;
+		
+		/**
 		 * Construtor
 		 * 
 		 * Gera o DSN e inicia automaticamente a conexão com os parametros passados
@@ -66,11 +73,35 @@
 			
 			if($server != "" && $username != "" && $password != "" && $database != ""){
 				$this->dsn = $this->generateDSN($server, $database);
+				$this->username = $username;
+				$this->password = $password;
+				$this->open();				
 			}		
 			
 		}
 		
+		/**
+		 * Generate DSN
+		 * 
+		 * Gera string DSN para conexão do PDO
+		 * 
+		 * @param String $server Endereço do servidor
+		 * @param String $database Nome do banco de dados
+		 * @return String DSN
+		 */
 		private function generateDSN($server, $database){
-			$dsn = "mysql:host={$server};dbname={$database}";
+			return "mysql:host={$server};dbname={$database}";
+		}
+		
+		/**
+		 * Abre a conexão com o banco de dados
+		 * @throws \Exception Caso não seja configurado o banco de dados
+		 * @throws \PDOException Caso a configuração passada esteja errada
+		 */
+		public function open(){
+			if($this->dsn == "" || $this->username == "" || $this->password == "")
+				throw new Exception("Sem configuração do banco de dados");
+			
+			$this->_databaseLink = new \PDO($this->dsn, $this->username, $this->password);			
 		}
 	}
