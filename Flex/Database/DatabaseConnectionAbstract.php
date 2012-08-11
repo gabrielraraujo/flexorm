@@ -102,6 +102,34 @@
 			if($this->dsn == "" || $this->username == "" || $this->password == "")
 				throw new Exception("Sem configuração do banco de dados");
 			
-			$this->_databaseLink = new \PDO($this->dsn, $this->username, $this->password);			
+			$this->_databaseLink = new \PDO($this->dsn, $this->username, $this->password);	
+		}
+		
+		/**
+		 * Query
+		 * 
+		 * Executa uma busca com retorno de dados
+		 * em caso de erro retorna false ou dispara uma Exception
+		 * 
+		 * @param String $sql SQL a ser executado
+		 * @param array $options Dados para a busca
+		 * @param boolean $throwOnError True para disparar um exception em caso de erro
+		 * @throws Exception Em caso de falha e se $throwOnError receber true
+		 * @return mixed|boolean False em caso de erro ou um objeto com os dados
+		 */
+		public function query($sql, array $options = null, $throwOnError = false){
+			$stmt = $this->_databaseLink->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$success = $stmt->execute($options);
+			
+			if($success){
+				return $stmt->fetchAll(PDO::FETCH_OBJ);
+			} else {
+				
+				if($throwOnError)
+					throw new Exception("Erro ao executar o comando SQL");
+				else
+					return false;
+				
+			}
 		}
 	}
