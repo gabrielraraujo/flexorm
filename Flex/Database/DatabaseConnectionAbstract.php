@@ -1,7 +1,29 @@
 <?php
 
-	namespace Flex\Database;
+	/**
+	 * Flex Framework : RDA Framework PHP
+	 * Copyright 2012, Gabriel Ribeiro
+	 *
+	 * Licensed under The MIT License
+	 * Redistributions of files must retain the above copyright notice.
+	 *
+	 * @copyright     Copyright 2012, Gabriel Ribeiro. <ribeirogabriel.95@gmail.com>
+	 * @package       Flex.Database
+	 * @since         Flex Framework 0.1
+	 * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+	 */
 
+	namespace Flex\Database;
+	
+	/**
+	 * Database Connection Abstract
+	 * 
+	 * Base para todas as conexões com bancos de dados
+	 * Importante: Até a ultima atualização desta classe o unico SGBD suportados era o MySQL.
+	 * 
+	 * @package Flex.Database;
+	 * @author Gabriel Ribeiro <ribeirogabriel.95@gmail.com>
+	 */
 	class DatabaseConnectionAbstract
 	{
 		/**
@@ -162,5 +184,24 @@
 				else
 					return false;
 			}
+		}
+		
+		/**
+		 * Is Closed
+		 * 
+		 * Retorna true caso a conexão ainda esteja aberta, ou false
+		 * caso ela não esteja mais aberta.
+		 * 
+		 * @return boolean Status da conexão
+		 */
+		public function isClosed(){
+			return ($this->_databaseLink instanceof \PDO);
+		}
+		
+		/**
+		 * Fecha a conexão com o banco de dados
+		 */
+		public function close(){
+			$this->_databaseLink = null;
 		}
 	}
