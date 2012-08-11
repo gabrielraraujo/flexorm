@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * Flex Framework : RDA Framework PHP
+	 * Flex Framework : RAD Framework PHP
 	 * Copyright 2012, Gabriel Ribeiro
 	 *
 	 * Licensed under The MIT License
