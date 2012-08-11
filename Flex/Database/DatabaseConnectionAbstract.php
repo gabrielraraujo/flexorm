@@ -132,4 +132,35 @@
 				
 			}
 		}
+		
+		/**
+		 * Execute 
+		 * 
+		 * Semelhante ao Query porem não retorna um objeto
+		 * mas sim True se tudo ocorrer normal, ou false em caso
+		 * de algum erro.
+		 * 
+		 * @param String $sql SQL a ser executado
+		 * @param array $options Dados para a busca
+		 * @param boolean $throwOnError True para disparar um exception em caso de erro
+		 * @throws Exception Em caso de falha e se $throwOnError receber true
+		 * @return mixed|boolean False em caso de erro ou um objeto com os dados
+		 */
+		public function execute($sql, array $options = null, $throwOnError = false){
+			try {
+				
+				$query = $this->query($sql, $options, true);
+				
+				if($query == false)
+					throw new Exception("Erro ao executar o comando SQL");
+				
+				return true;
+				
+			} catch(Exception $ex){
+				if($throwOnError)
+					throw new Exception("Erro ao executar o comando SQL");
+				else
+					return false;
+			}
+		}
 	}
