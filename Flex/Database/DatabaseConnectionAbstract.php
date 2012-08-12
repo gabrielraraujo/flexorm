@@ -90,6 +90,8 @@
 		 * @param String $password Senha do usuario
 		 * @param String $database Nome do banco de dados
 		 * @param int $port Porta de conexão
+		 * @throws \Exception Caso não seja configurado o banco de dados
+		 * @throws \PDOException Caso a configuração passada esteja errada
 		 */
 		public function __construct($server = "", $username = "", $password = "", $database = "", $port = 3306){
 			
